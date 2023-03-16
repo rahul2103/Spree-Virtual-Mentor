@@ -7,6 +7,9 @@ module Spree
         response = Spree::OpenAi::FineTunes.new.completions(text_prompt)
       end
 
+      def chat
+      end
+
       def set_completions_model
         SpreeVirtualMentor::Config[:fine_tuned_model] = params[:completions_model]
 
@@ -23,7 +26,7 @@ module Spree
         if File.exist?(file_path)
           @file_upload_response = Spree::OpenAi::FineTunes.new.file_upload(file_path)
 
-          if file_upload_response['status'] == 'success'
+          if @file_upload_response['status'] == 'success'
             flash[:success] = 'Successfully Uploaded !'
           else
             flash[:error] = 'Something went wrong, pls try again!'
