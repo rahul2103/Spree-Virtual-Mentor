@@ -1,0 +1,50 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:fine_tunes_lists) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+    <%= Spree.t(:upload_new_fine_tunes) %>
+  </button>
+<% end %>
+
+<%= render 'upload_fine_tunes_modal' %>
+
+<div class="alert <%= SpreeVirtualMentor::Config[:fine_tuned_model].present? ? 'alert-success' : 'alert-danger'%>" role="alert">
+  <% if SpreeVirtualMentor::Config[:fine_tuned_model].present? %>
+    Default fine tuned model: <%= SpreeVirtualMentor::Config[:fine_tuned_model] %>
+  <% else %>
+    Default fine tuned model is not defined. Please configure.
+  <% end %>
+</div>
+
+<% if (@fine_tunes_lists["status"] == 'success') && @fine_tunes_lists["data"].any? %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr data-hook="admin_roles_index_headers">
+          <% @fine_tunes_lists["data"].first.keys.each do |table_title| %>
+            <th><%= table_title %></th>
+          <% end %>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @fine_tunes_lists["data"].each_with_index do |file| %>
+          <tr>
+            <% @fine_tunes_lists["data"].first.keys.each do |table_title| %>
+              <td><%= file["#{table_title}"] %></td>
+            <% end %>
+            <td>
+              <%= link_to_with_icon('save.svg', 'Set default fune model', set_completions_model_admin_mentors_path(completions_model: file["fine_tuned_model"]), no_text: true, method: :put, class: "btn btn-warning btn-sm with-tip") %>              
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-warning">
+    <%= Spree.t(:no_resource_found, resource: 'Fine Tunes Lists') %>!
+  </div>
+<% end %>

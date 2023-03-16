@@ -4,6 +4,7 @@ module SpreeVirtualMentor
    # https://dev-docs.spreecommerce.org/internals/preferences
 
    preference :enabled, :boolean, default: true
+   preference :fine_tuned_model, :string
    # preference :dark_chocolate, :boolean, default: true
    # preference :color, :string, default: 'Red'
    # preference :favorite_number, :integer

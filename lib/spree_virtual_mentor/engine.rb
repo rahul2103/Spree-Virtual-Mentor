@@ -9,6 +9,10 @@ module SpreeVirtualMentor
       g.test_framework :rspec
     end
 
+    initializer 'spree_virtual_mentor.environment', before: 'spree.environment' do |app|
+      require File.join(File.dirname(__FILE__), '../../app/models/spree_virtual_mentor/configuration.rb')
+    end
+
     initializer 'spree_virtual_mentor.environment', before: :load_config_initializers do |_app|
       SpreeVirtualMentor::Config = SpreeVirtualMentor::Configuration.new
     end

@@ -1,4 +1,5 @@
 AllCops:
+  NewCops: enable
   DisplayCopNames: true
   TargetRubyVersion: 2.5
   Include:
@@ -14,6 +15,9 @@ Rails:
 
 Metrics/LineLength:
   Max: 150
+
+require:
+  - rubocop-rails
 
 # DISABLED
 

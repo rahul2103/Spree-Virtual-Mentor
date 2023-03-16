@@ -8,6 +8,7 @@ end
 gem 'spree', github: 'spree/spree', branch: 'main'
 # gem 'spree_backend', github: 'spree/spree', branch: 'main'
 gem 'rails-controller-testing'
-gem "ruby-openai"
+gem 'rubocop-rails', '~> 2.12', '>= 2.12.4'
+gem 'ruby-openai'
 
 gemspec
