@@ -2,13 +2,22 @@ module Spree
   module Admin
     class MentorsController < Spree::Admin::BaseController
       def completions
-        text_prompt = params[:text_prompt]
+        text_prompt = params[:mentor][:message] || 'Hello !'
 
         response = Spree::OpenAi::FineTunes.new.completions(text_prompt)
+
+        data = if response['status'] == 'success'
+                 { message: response['choices'].pluck('text') }
+               else
+                 { message: 'Something went wrong, pls try again.' }
+               end
+
+        respond_to do |format|
+          format.json { render json: data.to_json }
+        end
       end
 
-      def chat
-      end
+      def chat; end
 
       def set_completions_model
         SpreeVirtualMentor::Config[:fine_tuned_model] = params[:completions_model]

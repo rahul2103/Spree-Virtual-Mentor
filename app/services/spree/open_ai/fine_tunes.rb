@@ -16,6 +16,10 @@ module Spree
             prompt: text_prompt
           }
         )
+
+        return JSON.parse(response.body).merge('status' => 'success') if response.success?
+
+        { 'status' => 'errors' }
       end
 
       def lists

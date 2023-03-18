@@ -6,7 +6,7 @@ Spree::Core::Engine.add_routes do
       get 'fine-tunes-lists'
       post 'create-fine-tunes'
       put 'set-completions-model'
-      get 'completions'
+      post 'completions'
     end
   end
 end
