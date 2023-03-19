@@ -5,6 +5,7 @@ module SpreeVirtualMentor
 
    preference :enabled, :boolean, default: true
    preference :fine_tuned_model, :string
+   preference :custom_model, :string
    # preference :dark_chocolate, :boolean, default: true
    # preference :color, :string, default: 'Red'
    # preference :favorite_number, :integer

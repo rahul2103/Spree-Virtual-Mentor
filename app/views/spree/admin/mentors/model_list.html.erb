@@ -1,0 +1,43 @@
+<% content_for :page_title do %>
+  <%= Spree.t(:model_list) %>
+<% end %>
+
+
+<div class="alert <%= SpreeVirtualMentor::Config[:custom_model].present? ? 'alert-success' : 'alert-danger'%>" role="alert">
+  <% if SpreeVirtualMentor::Config[:custom_model].present? %>
+    Default model: <%= SpreeVirtualMentor::Config[:custom_model] %>
+  <% else %>
+    Default model is not defined. Please configure.
+  <% end %>
+</div>
+
+<% if (@model_lists["status"] == 'success') && @model_lists["data"].any? %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr data-hook="admin_roles_index_headers">
+          <% @model_lists["data"].first.keys.each do |table_title| %>
+            <th><%= table_title %></th>
+          <% end %>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @model_lists["data"].each_with_index do |file| %>
+          <tr>
+            <% @model_lists["data"].first.keys.each do |table_title| %>
+              <td><%= file["#{table_title}"] %></td>
+            <% end %>
+            <td>
+              <%= link_to_with_icon('save.svg', 'Set default fune model', set_custom_model_admin_mentors_path(custom_model: file["id"]), no_text: true, method: :put, class: "btn btn-warning btn-sm with-tip") %>              
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="alert alert-warning">
+    <%= Spree.t(:no_resource_found, resource: 'Model Lists') %>!
+  </div>
+<% end %>

@@ -7,7 +7,7 @@ module Spree
         response = Spree::OpenAi::FineTunes.new.completions(text_prompt)
 
         data = if response['status'] == 'success'
-                 { message: response['choices'].pluck('text') }
+                 { message: response["choices"].map { |c| c["text"] } }
                else
                  { message: 'Something went wrong, pls try again.' }
                end
@@ -19,10 +19,21 @@ module Spree
 
       def chat; end
 
+      def model_list
+        @model_lists = Spree::OpenAi::FineTunes.new.model_list
+      end
+
       def set_completions_model
         SpreeVirtualMentor::Config[:fine_tuned_model] = params[:completions_model]
 
         redirect_to fine_tunes_lists_admin_mentors_url
+      end
+
+
+      def set_custom_model
+        SpreeVirtualMentor::Config[:custom_model] = params[:custom_model]
+
+        redirect_to model_list_admin_mentors_url
       end
 
       def fine_tunes_lists

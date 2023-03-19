@@ -3,8 +3,6 @@ module Spree
     class FineTunes
       attr_accessor :client
 
-      CUSTOM_MODEL = 'ada'.freeze
-
       def initialize
         @client = OpenAI::Client.new
       end
@@ -30,6 +28,14 @@ module Spree
         { 'status' => 'errors' }
       end
 
+      def model_list
+        response = client.models.list
+
+        return JSON.parse(response.body).merge('status' => 'success') if response.success?
+
+        { 'status' => 'errors' }
+      end
+
       def file_upload(file_path)
         response = client.files.upload(parameters: { file: file_path, purpose: 'fine-tune' })
 
@@ -49,7 +55,7 @@ module Spree
         client.finetunes.create(
           parameters: {
             training_file: file_id,
-            model: CUSTOM_MODEL
+            model: SpreeVirtualMentor::Config[:custom_model]
           }
         )
       end

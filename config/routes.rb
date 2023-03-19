@@ -4,8 +4,10 @@ Spree::Core::Engine.add_routes do
     resource :mentors, only: [] do
       get 'chat'
       get 'fine-tunes-lists'
-      post 'create-fine-tunes'
+      get 'model-list'
       put 'set-completions-model'
+      put 'set-custom-model'
+      post 'create-fine-tunes'
       post 'completions'
     end
   end
