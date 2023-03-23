@@ -41,6 +41,7 @@
   const chatWindow = document.getElementById("chat-window");
   const messageInput = document.getElementById("message-input");
 
+
   function sendMessage() {
     const message = messageInput.value;
     const userBubble = document.createElement("div");
@@ -62,4 +63,12 @@
       }
     });
   }
+
+  messageInput.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      sendMessage();
+    }
+  });
+
 </script>
